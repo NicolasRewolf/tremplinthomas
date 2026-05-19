@@ -16,7 +16,7 @@ export function useTremplins() {
       const { data, error } = await supabase
         .from("tremplins")
         .select("*")
-        .eq("status", "open")
+        .order("status", { ascending: true })          // open d'abord (alphabétique)
         .order("deadline", { ascending: true, nullsFirst: false })
         .order("last_seen", { ascending: false })
 

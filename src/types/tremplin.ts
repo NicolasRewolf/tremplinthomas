@@ -1,3 +1,5 @@
+export type TremplinStatus = "open" | "closed" | "unknown" | "draft"
+
 export type Tremplin = {
   id: number
   url: string
@@ -9,7 +11,9 @@ export type Tremplin = {
   deadline: string | null
   location: string | null
   confidence: number | null
-  status: "open" | "closed" | "draft"
+  status: TremplinStatus
+  edition_year: number | null
+  reasoning: string | null
   first_seen: string
   last_seen: string
 }
