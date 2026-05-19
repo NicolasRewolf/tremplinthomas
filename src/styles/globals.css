@@ -1,0 +1,185 @@
+@import "@fontsource-variable/geist";
+@import "tailwindcss";
+
+/* Scan Tremor (Tailwind v4) — classes des composants @tremor/react */
+@source "../../node_modules/@tremor/react/**/*.{js,ts,jsx,tsx}";
+
+
+@layer base {
+  :root {
+    /* ── Neutrals ── */
+    --color-canvas:       #F7F6F3;
+    --color-surface:      #FFFFFF;
+    --color-surface-subtle: #F0EEE9;
+    --color-border:       #E2DED7;
+    --color-border-subtle: #EEECE8;
+
+    /* ── Text ── */
+    --color-text-primary:   #111110;
+    --color-text-secondary: #6B6860;
+    --color-text-tertiary:  #A09D97;
+    --color-text-inverse:   #FFFFFF;
+
+    /* ── Accent — charbon chaud ── */
+    --color-accent:         #1A1916;
+    --color-accent-hover:   #2E2D29;
+    --color-accent-muted:   #3D3C37;
+
+    /* ── Signal ── */
+    --color-success:  #2D6A4F;
+    --color-warning:  #B45309;
+    --color-danger:   #9B1C1C;
+    --color-info:     #1E40AF;
+
+    /* ── Semantic ── */
+    --background: var(--color-canvas);
+    --foreground: var(--color-text-primary);
+    --card:       var(--color-surface);
+    --card-foreground: var(--color-text-primary);
+    --border:     var(--color-border);
+    --input:      var(--color-border);
+    --ring:       var(--color-accent);
+    --primary:    var(--color-accent);
+    --primary-foreground: var(--color-text-inverse);
+    --secondary:  var(--color-surface-subtle);
+    --secondary-foreground: var(--color-text-primary);
+    --muted:      var(--color-surface-subtle);
+    --muted-foreground: var(--color-text-secondary);
+    --destructive: var(--color-danger);
+    --destructive-foreground: var(--color-text-inverse);
+    --accent: var(--color-surface-subtle);
+    --accent-foreground: var(--color-text-primary);
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text-primary);
+
+    /* ── Radius ── */
+    --radius-sm:  4px;
+    --radius-md:  8px;
+    --radius-lg:  12px;
+    --radius-xl:  20px;
+    --radius:     var(--radius-md);
+
+    /* ── Typography ── */
+    --font-sans:  "Geist Variable", system-ui, sans-serif;
+    --font-mono:  "Geist Mono", monospace;
+
+    /* ── Spacing scale ── */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    /* ── Shadow ── */
+    --shadow-xs: 0 1px 2px rgba(17,17,16,0.04);
+    --shadow-sm: 0 1px 4px rgba(17,17,16,0.06), 0 0 0 1px rgba(17,17,16,0.04);
+    --shadow-md: 0 4px 16px rgba(17,17,16,0.08), 0 0 0 1px rgba(17,17,16,0.04);
+    --shadow-lg: 0 8px 32px rgba(17,17,16,0.10), 0 0 0 1px rgba(17,17,16,0.04);
+  }
+
+  .dark {
+    --color-canvas:         #111110;
+    --color-surface:        #18181A;
+    --color-surface-subtle: #1F1F21;
+    --color-border:         #2A2A2C;
+    --color-border-subtle:  #222224;
+
+    --color-text-primary:   #F5F4F0;
+    --color-text-secondary: #9B9990;
+    --color-text-tertiary:  #6B6860;
+    --color-text-inverse:   #111110;
+
+    --color-accent:         #F5F4F0;
+    --color-accent-hover:   #DDDBD4;
+    --color-accent-muted:   #C8C5BC;
+
+    --background: var(--color-canvas);
+    --foreground: var(--color-text-primary);
+    --card:       var(--color-surface);
+    --border:     var(--color-border);
+    --primary:    var(--color-accent);
+    --primary-foreground: var(--color-text-inverse);
+    --muted:      var(--color-surface-subtle);
+    --muted-foreground: var(--color-text-secondary);
+    --destructive-foreground: var(--color-text-inverse);
+    --accent: var(--color-surface-subtle);
+    --accent-foreground: var(--color-text-primary);
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text-primary);
+    --card-foreground: var(--color-text-primary);
+    --secondary: var(--color-surface-subtle);
+    --secondary-foreground: var(--color-text-primary);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: var(--color-border);
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  code, pre, kbd, samp {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+  }
+
+  /* Scrollbar — minimal */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+}
