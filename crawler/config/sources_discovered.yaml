@@ -1,0 +1,568 @@
+# Sources candidates extraites automatiquement de la section Nouvelle-Aquitaine
+# de la page Wikipédia 'Liste de salles de spectacle en France' (dump du 2026-05-19).
+#
+# IMPORTANT : URL=null par défaut. Avant fusion dans sources.yaml :
+#   1. recherche le site officiel de chaque salle
+#   2. vérifie qu'elle organise effectivement (ou pourrait organiser) un tremplin
+#   3. retire celles qui ne pertinent pas (grandes arènes type Arkéa, stades...)
+#
+
+- id: arenes-de-bayonne-64
+  name: Arènes de Bayonne
+  city: Bayonne
+  capacity: 10 000 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: arenes-de-dax-40
+  name: Arènes de Dax
+  city: Dax
+  capacity: 8 230 places
+  dept: 40
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: zenith-pyrenees-de-pau-64
+  name: Zénith Pyrénées de Pau
+  city: Pau
+  capacity: 7 500 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: patinoire-de-meriadeck-33
+  name: Patinoire de Mériadeck
+  city: Bordeaux
+  capacity: 7 250 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-carat-16
+  name: Espace Carat
+  city: "L'Isle-d'Espagnac"
+  capacity: 7 000 places
+  dept: 16
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-palio-24
+  name: Le Palio
+  city: Boulazac Isle Manoire
+  capacity: 6 500 places
+  dept: 24
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: arena-futuroscope-86
+  name: Arena Futuroscope
+  city: Chasseneuil-du-Poitou
+  capacity: 6 144 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: zenith-de-limoges-metropole-87
+  name: Zénith de Limoges Métropole
+  city: Limoges
+  capacity: 6 047 places
+  dept: 87
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: centre-de-congres-47
+  name: Centre de congrès
+  city: Agen
+  capacity: 4 562 places
+  dept: 47
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: parc-expo-86
+  name: Parc Expo
+  city: Poitiers
+  capacity: "4 500 places[\[24\]](#cite_note-24)"
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-acclameur-79
+  name: "L'Acclameur"
+  city: Niort
+  capacity: 3 500 places
+  dept: 79
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-tube-les-bourdaines-40
+  name: Le Tube - Les Bourdaines
+  city: Seignosse
+  capacity: 2 600 places
+  dept: 40
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: bocapole-79
+  name: Bocapole
+  city: Bressuire
+  capacity: 2 500 places
+  dept: 79
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-des-trois-provinces-19
+  name: Espace des trois provinces
+  city: Brive-la-Gaillarde
+  capacity: 2 100 places
+  dept: 19
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-du-lac-33
+  name: Espace du Lac
+  city: Bordeaux
+  capacity: 2 000 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-d-ornon-33
+  name: "Espace d'Ornon"
+  city: "Villenave d'Ornon"
+  capacity: 2 000 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-cube-33
+  name: Le Cube
+  city: "Villenave d'Ornon"
+  capacity: 1 554 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-du-vigean-33
+  name: Salle du Vigean
+  city: Eysines
+  capacity: 1 499 places (800 assises)
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: opera-theatre-de-limoges-87
+  name: Opéra-théâtre de Limoges
+  city: Limoges
+  capacity: 1 484 places
+  dept: 87
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: auditorium-33
+  name: Auditorium
+  city: Bordeaux
+  capacity: 1 440 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: escapce-culturel-querandau-33
+  name: Escapce culturel Querandau
+  city: "Saint-Jean-d'Illac"
+  capacity: 1 410 places debout. 474 places assises
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: gare-du-midi-64
+  name: Gare du Midi
+  city: Biarritz
+  capacity: 1 400 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-rocher-de-palmer-33
+  name: Le Rocher de Palmer
+  city: Cenon
+  capacity: 1 200 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-des-fetes-du-grand-parc-33
+  name: Salle des fêtes du Grand Parc
+  city: Bordeaux
+  capacity: 1 200 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: palais-des-congres-86
+  name: Palais des congrès
+  city: Chasseneuil-du-Poitou
+  capacity: 1 150 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: angelarde-complexe-86
+  name: Angelarde-Complexe
+  city: Châtellerault
+  capacity: 1 104 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: grand-theatre-33
+  name: Grand Théâtre
+  city: Bordeaux
+  capacity: 1 100 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-salicorne-17
+  name: La Salicorne
+  city: Saujon
+  capacity: 1 100 places
+  dept: 17
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: auditorium-de-poitiers-86
+  name: Auditorium de Poitiers
+  city: Poitiers
+  capacity: 1 020 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: olympia-33
+  name: Olympia
+  city: Arcachon
+  capacity: 1 000 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-coursive-17
+  name: La Coursive
+  city: La Rochelle
+  capacity: 1 000 places
+  dept: 17
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-olympia-33
+  name: "L'Olympia"
+  city: Arcachon
+  capacity: 1 000 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-bellegrave-33
+  name: Salle Bellegrave
+  city: Pessac
+  capacity: 1 000 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-bien-public-33
+  name: Le Bien Public
+  city: Bordeaux
+  capacity: 965 places debout (300 assises)
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-des-s-urs-de-la-riviere-87
+  name: Salle des sœurs de la Rivière
+  city: Limoges
+  capacity: 887 places
+  dept: 87
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-coupole-33
+  name: La coupole
+  city: Saint-Loubès
+  capacity: 828 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: auditorium-alfred-de-vigny-64
+  name: Auditorium Alfred de Vigny
+  city: Pau
+  capacity: 800 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: theatre-quintaou-64
+  name: Théâtre Quintaou
+  city: Anglet
+  capacity: 792 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-carre-des-jalles-33
+  name: Le carré des Jalles
+  city: Saint-Médard-en-Jalles
+  capacity: 792 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-florida-47
+  name: Le Florida
+  city: Agen
+  capacity: 750 places
+  dept: 47
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-james-chambaud-64
+  name: Espace James Chambaud
+  city: Lons
+  capacity: 750 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-apollo-64
+  name: Salle Apollo
+  city: Boucau
+  capacity: 727 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: theatre-de-poitiers-86
+  name: Théâtre de Poitiers
+  city: Poitiers
+  capacity: 720 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: casino-theatre-barriere-de-bordeaux-33
+  name: Casino Théâtre Barrière de Bordeaux
+  city: Bordeaux
+  capacity: 718 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: confort-moderne-86
+  name: Confort Moderne
+  city: Poitiers
+  capacity: 700 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: salle-john-lennon-87
+  name: Salle John Lennon
+  city: Limoges
+  capacity: 699 places
+  dept: 87
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: rock-school-barbey-33
+  name: Rock School Barbey
+  city: Bordeaux
+  capacity: 676 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-miroir-33
+  name: Le Miroir
+  city: Gujan-Mestras
+  capacity: 650 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-secteur-33
+  name: Le Secteur
+  city: Bègles
+  capacity: 630 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-nef-16
+  name: La nef
+  city: Angoulême
+  capacity: 600 places
+  dept: 16
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: pole-culturel-ev-sion-salle-didier-lockwood-33
+  name: Pôle Culturel Ev@sion (Salle Didier Lockwood)
+  city: Ambarès-et-Lagrave
+  capacity: 600 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-estive
+  name: "L'estive"
+  city: Foix
+  capacity: 590 places
+  dept: null
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: pole-culturel-du-foirail-64
+  name: Pôle culturel du Foirail
+  city: Pau
+  capacity: 580 places
+  dept: 64
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: les-cigales-40
+  name: Les Cigales
+  city: Luxey
+  capacity: 550 places
+  dept: 40
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: sans-reserve-24
+  name: Sans Réserve
+  city: Périgueux
+  capacity: 500 places
+  dept: 24
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-caravelle-33
+  name: La caravelle
+  city: Marcheprime
+  capacity: 500 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-ekla-33
+  name: "L'Ekla"
+  city: Le Teich
+  capacity: 500 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-culturel-des-2-rives-33
+  name: Espace culturel des 2 Rives
+  city: Ambès
+  capacity: 500 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-mac-3-a-l-s-pace-campus-33
+  name: "La Mac 3 à l'(S)pace’ Campus"
+  city: Pessac
+  capacity: 500 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: theatre-jean-vilar-33
+  name: Théâtre Jean Vilar
+  city: Eysines
+  capacity: 490 places (sans gradins, 297 avec)
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-entrepot-33
+  name: L’Entrepôt
+  city: Le Haillan
+  capacity: 456 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-accordeur-33
+  name: "L'accordeur"
+  city: Saint-Denis-de-Pile
+  capacity: 450 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-carre-des-forges-33
+  name: Le carré des Forges
+  city: Fargues-Saint-Hilaire
+  capacity: 450 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: l-atrium-40
+  name: L’Atrium
+  city: Dax
+  capacity: 450 places
+  dept: 40
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: theatre-des-4-saisons-33
+  name: Théâtre des 4 Saisons
+  city: Gradignan
+  capacity: 400 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-passerelle-86
+  name: La Passerelle
+  city: Nouaillé-Maupertuis
+  capacity: 398 places
+  dept: 86
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-dolce-vita-33
+  name: La Dolce Vita
+  city: Andernos-les-Bains
+  capacity: 350 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: la-fourmi-87
+  name: La Fourmi
+  city: Limoges
+  capacity: 300 places
+  dept: 87
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: espace-culturel-lucien-mounaix-33
+  name: Espace Culturel Lucien Mounaix
+  city: Biganos
+  capacity: 300 places
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue
+
+- id: le-reflet-33
+  name: Le Reflet
+  city: Tresses
+  capacity: "264 places assises, jusqu'à près de 1500 places avec la salle d'expositions attenante."
+  dept: 33
+  url: null  # à compléter manuellement
+  type: venue

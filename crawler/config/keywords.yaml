@@ -1,0 +1,43 @@
+# Mots-clés du filtre rapide (pré-LLM). Insensibles à la casse, normalisation accents.
+# Une page passe le filtre si elle matche AU MOINS un mot fort OU (un mot moyen + un mot contexte).
+
+strong:
+  - tremplin
+  - "appel à candidatures"
+  - "appel a candidatures"
+  - "appel à projets musique"
+  - "concours musiques actuelles"
+  - "concours groupes"
+  - "sélection de groupes"
+  - "selection de groupes"
+
+medium:
+  - candidature
+  - concours
+  - "appel à projets"
+  - selection
+  - sélection
+
+context:
+  - musique
+  - musicien
+  - groupe
+  - artiste
+  - chanson
+  - rap
+  - hip-hop
+  - rock
+  - électro
+  - electro
+  - jazz
+  - emergent
+  - émergent
+  - scène
+  - scene
+
+# Exclusions — vetent la candidature même si les mots forts matchent
+exclude:
+  - "tremplin de saut"
+  - "tremplin olympique"
+  - "tremplin emploi"
+  - "tremplin numérique"

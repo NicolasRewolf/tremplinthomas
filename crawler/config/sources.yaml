@@ -1,0 +1,116 @@
+# Sources de veille — Nouvelle-Aquitaine
+# Codes département: 16 Charente, 17 Charente-Maritime, 19 Corrèze, 23 Creuse,
+# 24 Dordogne, 33 Gironde, 40 Landes, 47 Lot-et-Garonne, 64 Pyrénées-Atlantiques,
+# 79 Deux-Sèvres, 86 Vienne, 87 Haute-Vienne.
+#
+# Champs:
+#   id, name, url, dept (code ou "NA" si régional), type, paths (optionnel)
+#
+# type: network | institution | smac | venue | platform | media
+
+# ─── Réseaux régionaux (le plus rentable) ────────────────────────────────────
+- id: le-rim
+  name: Le RIM — Réseau des Indépendants de la Musique en NA
+  url: https://le-rim.org/
+  dept: NA
+  type: network
+  paths: ["/agenda/", "/actualites/", "/ressources/"]
+
+- id: le-pole
+  name: Le Pôle — secteur musiques actuelles
+  url: https://le-pole.fr/
+  dept: NA
+  type: network
+
+# ─── Institutions ────────────────────────────────────────────────────────────
+- id: region-na-culture
+  name: Région Nouvelle-Aquitaine — Culture
+  url: https://www.nouvelle-aquitaine.fr/
+  dept: NA
+  type: institution
+  paths: ["/aides-et-appels-projets/culture", "/actualites"]
+
+- id: drac-na
+  name: DRAC Nouvelle-Aquitaine
+  url: https://www.culture.gouv.fr/Regions/DRAC-Nouvelle-Aquitaine
+  dept: NA
+  type: institution
+
+# ─── SMAC et grandes salles (Gironde) ────────────────────────────────────────
+- id: rock-school-barbey
+  name: Rock School Barbey
+  url: https://www.rockschool-barbey.com/
+  dept: "33"
+  type: smac
+
+- id: krakatoa
+  name: Krakatoa
+  url: https://krakatoa.org/
+  dept: "33"
+  type: smac
+
+- id: rocher-de-palmer
+  name: Le Rocher de Palmer
+  url: https://lerocherdepalmer.fr/
+  dept: "33"
+  type: smac
+
+- id: iboat
+  name: Iboat
+  url: https://www.iboat.eu/
+  dept: "33"
+  type: venue
+
+# ─── Charente-Maritime ───────────────────────────────────────────────────────
+- id: la-sirene
+  name: La Sirène — La Rochelle
+  url: https://www.la-sirene.fr/
+  dept: "17"
+  type: smac
+
+# ─── Vienne / Deux-Sèvres ────────────────────────────────────────────────────
+- id: confort-moderne
+  name: Le Confort Moderne
+  url: https://confort-moderne.fr/
+  dept: "86"
+  type: smac
+
+- id: camji
+  name: Le CAMJI — Niort
+  url: https://camji.com/
+  dept: "79"
+  type: smac
+
+# ─── Pyrénées-Atlantiques ────────────────────────────────────────────────────
+- id: ampli
+  name: Ampli — Billère
+  url: https://ampli.fr/
+  dept: "64"
+  type: smac
+
+- id: atabal
+  name: Atabal — Biarritz
+  url: https://www.atabal-biarritz.fr/
+  dept: "64"
+  type: smac
+
+# ─── Lot-et-Garonne ──────────────────────────────────────────────────────────
+- id: le-florida
+  name: Le Florida — Agen
+  url: https://www.leflorida.org/
+  dept: "47"
+  type: smac
+
+# ─── Limousin ────────────────────────────────────────────────────────────────
+- id: ciam-87
+  name: CIAM — Limoges (à confirmer)
+  url: https://www.ciam-limoges.com/
+  dept: "87"
+  type: venue
+
+# ─── Plateformes / médias ────────────────────────────────────────────────────
+- id: longueur-dondes
+  name: Longueur d'Ondes — appels à projets
+  url: https://www.longueurdondes.com/
+  dept: NA
+  type: media

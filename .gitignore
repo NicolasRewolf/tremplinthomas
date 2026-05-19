@@ -38,3 +38,14 @@ pnpm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Python (crawler/)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+crawler/data/*.db
+crawler/data/cache/
