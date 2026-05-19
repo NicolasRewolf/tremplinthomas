@@ -1,4 +1,5 @@
-import { useVenuesStats } from "@/hooks/useVenuesStats"
+import { useMemo } from "react"
+import { useVenues } from "@/hooks/useVenues"
 import { DEPT_LABELS } from "@/types/tremplin"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -9,6 +10,7 @@ import { Loader2 } from "lucide-react"
 const CATEGORY_LABELS: Record<string, string> = {
   "lieu-de-diffusion": "Lieux de diffusion",
   festival: "Festivals",
+  "festival-min-culture": "Festivals (Min. Culture)",
   "equipe-artistique": "Équipes artistiques",
   "lieu-de-travail-artistique": "Lieux de travail artistique",
   "editeur-label": "Éditeurs / labels",
@@ -19,10 +21,49 @@ const CATEGORY_LABELS: Record<string, string> = {
   "reseau-agence": "Réseaux / agences",
   "formation-initiale": "Formation initiale",
   autre: "Autres",
+  "culture-gouv-arts-spectacle": "Culture.gouv — Arts du spectacle",
 }
 
 export function CatalogueView() {
-  const state = useVenuesStats()
+  const state = useVenues()
+
+  const stats = useMemo(() => {
+    if (state.status !== "ready") {
+      return { total: 0, crawlable: 0, withEmail: 0, categories: [], depts: [] }
+    }
+    const data = state.data
+    const total = data.length
+    const crawlable = data.filter((v) => v.crawlable).length
+    const withEmail = data.filter((v) => v.email).length
+
+    const catMap = new Map<string, { total: number; crawlable: number }>()
+    for (const v of data) {
+      for (const c of v.categories) {
+        const e = catMap.get(c) ?? { total: 0, crawlable: 0 }
+        e.total++
+        if (v.crawlable) e.crawlable++
+        catMap.set(c, e)
+      }
+    }
+
+    const deptMap = new Map<string, number>()
+    for (const v of data) {
+      const d = v.dept ?? "—"
+      deptMap.set(d, (deptMap.get(d) ?? 0) + 1)
+    }
+
+    return {
+      total,
+      crawlable,
+      withEmail,
+      categories: Array.from(catMap, ([category, v]) => ({ category, ...v })).sort(
+        (a, b) => b.total - a.total
+      ),
+      depts: Array.from(deptMap, ([dept, total]) => ({ dept, total }))
+        .filter((d) => d.dept !== "—")
+        .sort((a, b) => b.total - a.total),
+    }
+  }, [state])
 
   if (state.status === "loading") {
     return (
@@ -43,28 +84,25 @@ export function CatalogueView() {
     )
   }
 
-  const catData = state.categories.map((c) => ({
+  const catData = stats.categories.map((c) => ({
     name: CATEGORY_LABELS[c.category] ?? c.category,
     total: c.total,
   }))
-
-  const deptData = state.depts
-    .filter((d) => d.dept !== "—")
-    .map((d) => ({
-      name: DEPT_LABELS[d.dept] ?? d.dept,
-      total: d.total,
-    }))
+  const deptData = stats.depts.map((d) => ({
+    name: DEPT_LABELS[d.dept] ?? d.dept,
+    total: d.total,
+  }))
 
   return (
     <div className="space-y-8">
       <div className="grid gap-3 sm:grid-cols-3">
-        <StatCard label="Structures" value={state.total} />
+        <StatCard label="Structures canoniques" value={stats.total} hint="après dédoublonnage par slug name+ville" />
         <StatCard
-          label="Crawlables"
-          value={state.crawlable}
-          hint={`${Math.round((state.crawlable / state.total) * 100)} % du catalogue`}
+          label="Crawlables (avec URL)"
+          value={stats.crawlable}
+          hint={`${Math.round((stats.crawlable / Math.max(1, stats.total)) * 100)} % du catalogue`}
         />
-        <StatCard label="Catégories" value={state.categories.length} />
+        <StatCard label="Avec email contact" value={stats.withEmail} />
       </div>
 
       <section>
@@ -82,7 +120,7 @@ export function CatalogueView() {
               data={catData}
               xKey="name"
               bars={[{ key: "total", label: "Structures" }]}
-              height={320}
+              height={360}
               layout="vertical"
             />
           </CardContent>
@@ -97,7 +135,7 @@ export function CatalogueView() {
               data={deptData}
               xKey="name"
               bars={[{ key: "total", label: "Structures" }]}
-              height={320}
+              height={300}
             />
           </CardContent>
         </Card>
@@ -105,10 +143,10 @@ export function CatalogueView() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Détail par catégorie</CardTitle>
+          <CardTitle className="text-base">Détail par catégorie (compte canonique)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
-          {state.categories.map((c) => (
+          {stats.categories.map((c) => (
             <div key={c.category} className="flex items-center justify-between gap-2">
               <span>{CATEGORY_LABELS[c.category] ?? c.category}</span>
               <span className="flex items-center gap-2">

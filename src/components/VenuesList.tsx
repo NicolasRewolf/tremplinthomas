@@ -11,6 +11,7 @@ const PAGE_SIZE = 50
 const CATEGORY_LABELS: Record<string, string> = {
   "lieu-de-diffusion": "Lieu de diffusion",
   festival: "Festival",
+  "festival-min-culture": "Festival (Min. Culture)",
   "equipe-artistique": "Équipe artistique",
   "lieu-de-travail-artistique": "Lieu de travail artistique",
   "editeur-label": "Éditeur / label",
@@ -22,13 +23,11 @@ const CATEGORY_LABELS: Record<string, string> = {
   "formation-initiale": "Formation initiale",
   autre: "Autre",
   wikipedia: "Wikipédia",
+  "culture-gouv-arts-spectacle": "Culture.gouv — Arts du spectacle",
 }
 
 function normalize(s: string): string {
-  return s
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
 }
 
 export function VenuesList() {
@@ -48,7 +47,7 @@ export function VenuesList() {
 
   const categories = useMemo(() => {
     const s = new Set<string>()
-    for (const v of all) if (v.category) s.add(v.category)
+    for (const v of all) for (const c of v.categories) s.add(c)
     return Array.from(s).sort()
   }, [all])
 
@@ -56,13 +55,12 @@ export function VenuesList() {
     const q = normalize(search.trim())
     return all.filter((v) => {
       if (dept !== "all" && (v.dept ?? "") !== dept) return false
-      if (category !== "all" && (v.category ?? "") !== category) return false
+      if (category !== "all" && !v.categories.includes(category)) return false
       if (q && !normalize(`${v.name} ${v.city}`).includes(q)) return false
       return true
     })
   }, [all, search, dept, category])
 
-  // Reset pagination quand un filtre change
   useMemo(() => setVisible(PAGE_SIZE), [search, dept, category])
 
   if (state.status === "loading") {
@@ -120,12 +118,12 @@ export function VenuesList() {
       </div>
 
       <div className="text-xs text-muted-foreground">
-        {filtered.length.toLocaleString("fr-FR")} structure(s) sur {all.length.toLocaleString("fr-FR")}
+        {filtered.length.toLocaleString("fr-FR")} structure(s) sur {all.length.toLocaleString("fr-FR")} (canoniques)
       </div>
 
       <ul className="divide-y divide-border rounded-lg border bg-card">
         {filtered.slice(0, visible).map((v) => (
-          <li key={v.id}>
+          <li key={v.slug_canon}>
             <VenueRow venue={v} />
           </li>
         ))}
@@ -153,12 +151,7 @@ function VenueRow({ venue }: { venue: Venue }) {
       <div className="min-w-0 flex-1">
         <div className="truncate font-medium">
           {venue.url ? (
-            <a
-              href={venue.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
+            <a href={venue.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
               {venue.name}
               <ExternalLink className="ml-1 inline h-3 w-3 align-middle opacity-60" />
             </a>
@@ -177,11 +170,13 @@ function VenueRow({ venue }: { venue: Venue }) {
           {DEPT_LABELS[venue.dept] ?? venue.dept}
         </Badge>
       )}
-      {venue.category && (
-        <Badge variant="outline" className="shrink-0 text-[11px]">
-          {CATEGORY_LABELS[venue.category] ?? venue.category}
-        </Badge>
-      )}
+      <div className="flex flex-wrap gap-1">
+        {venue.categories.map((c) => (
+          <Badge key={c} variant="outline" className="text-[11px]">
+            {CATEGORY_LABELS[c] ?? c}
+          </Badge>
+        ))}
+      </div>
     </div>
   )
 }
