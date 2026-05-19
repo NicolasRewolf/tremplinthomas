@@ -25,37 +25,45 @@ const initial: State = {
   error: null,
 }
 
+const PAGE = 1000
+
 export function useVenuesStats() {
   const [state, setState] = useState<State>(initial)
 
   useEffect(() => {
     let cancelled = false
     ;(async () => {
-      // PostgREST ne supporte pas GROUP BY direct — on récupère minimaliste puis
-      // on agrège côté client. Pour 4800 lignes c'est largement OK.
-      const { data, error } = await supabase
-        .from("venues")
-        .select("category,dept,crawlable")
-        .limit(10000)
+      // PostgREST cap le rôle anon à 1000 rows/requête → on pagine.
+      const all: { category: string; dept: string | null; crawlable: boolean }[] = []
+      let from = 0
+      for (let i = 0; i < 50; i++) {
+        const { data, error } = await supabase
+          .from("venues")
+          .select("category,dept,crawlable")
+          .range(from, from + PAGE - 1)
 
-      if (cancelled) return
-      if (error) {
-        setState({
-          status: "error",
-          categories: null,
-          depts: null,
-          total: 0,
-          crawlable: 0,
-          error: error.message,
-        })
-        return
+        if (cancelled) return
+        if (error) {
+          setState({
+            status: "error",
+            categories: null,
+            depts: null,
+            total: 0,
+            crawlable: 0,
+            error: error.message,
+          })
+          return
+        }
+        const batch = data ?? []
+        all.push(...(batch as typeof all))
+        if (batch.length < PAGE) break
+        from += PAGE
       }
 
-      const rows = (data ?? []) as { category: string; dept: string | null; crawlable: boolean }[]
       const cats = new Map<string, CategoryCount>()
       const depts = new Map<string, DeptCount>()
       let crawlable = 0
-      for (const r of rows) {
+      for (const r of all) {
         if (r.crawlable) crawlable++
         const cat = r.category ?? "—"
         const c = cats.get(cat) ?? { category: cat, total: 0, crawlable: 0 }
@@ -71,14 +79,16 @@ export function useVenuesStats() {
       }
       const catList = Array.from(cats.values()).sort((a, b) => b.total - a.total)
       const deptList = Array.from(depts.values()).sort((a, b) => b.total - a.total)
-      setState({
-        status: "ready",
-        categories: catList,
-        depts: deptList,
-        total: rows.length,
-        crawlable,
-        error: null,
-      })
+      if (!cancelled) {
+        setState({
+          status: "ready",
+          categories: catList,
+          depts: deptList,
+          total: all.length,
+          crawlable,
+          error: null,
+        })
+      }
     })()
     return () => {
       cancelled = true

@@ -19,23 +19,38 @@ type State =
   | { status: "ready"; data: Venue[]; error: null }
   | { status: "error"; data: null; error: string }
 
+const PAGE = 1000  // limite stricte de PostgREST côté serveur (rôle anon)
+
 export function useVenues() {
   const [state, setState] = useState<State>({ status: "loading", data: null, error: null })
 
   useEffect(() => {
     let cancelled = false
     ;(async () => {
-      const { data, error } = await supabase
-        .from("venues")
-        .select("id,name,city,dept,postal_code,category,discipline,email,url,crawlable")
-        .order("name")
-        .limit(10000)
+      const all: Venue[] = []
+      let from = 0
+      // Pagine tant qu'on reçoit une page pleine. Sûr : on s'arrête au plus tard
+      // à 50000 lignes (50 itérations) pour éviter une boucle infinie.
+      for (let i = 0; i < 50; i++) {
+        const { data, error } = await supabase
+          .from("venues")
+          .select("id,name,city,dept,postal_code,category,discipline,email,url,crawlable")
+          .order("name")
+          .range(from, from + PAGE - 1)
 
-      if (cancelled) return
-      if (error) {
-        setState({ status: "error", data: null, error: error.message })
-      } else {
-        setState({ status: "ready", data: (data ?? []) as Venue[], error: null })
+        if (cancelled) return
+        if (error) {
+          setState({ status: "error", data: null, error: error.message })
+          return
+        }
+        const batch = (data ?? []) as Venue[]
+        all.push(...batch)
+        if (batch.length < PAGE) break
+        from += PAGE
+      }
+
+      if (!cancelled) {
+        setState({ status: "ready", data: all, error: null })
       }
     })()
     return () => {
