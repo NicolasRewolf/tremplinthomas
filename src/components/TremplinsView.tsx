@@ -23,22 +23,17 @@ export function TremplinsView() {
   )
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-6 py-10">
-      <header className="mb-8 flex items-baseline justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Tremplins musicaux</h1>
-          <p className="text-sm text-muted-foreground">Nouvelle-Aquitaine — veille automatique</p>
-        </div>
-        <div className="text-right text-sm text-muted-foreground">
-          {state.status === "loading" && (
-            <span className="inline-flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              chargement…
-            </span>
-          )}
-          {state.status === "ready" && <span>{tremplins.length} ouvert(s)</span>}
-        </div>
-      </header>
+    <div className="space-y-6">
+      <div className="flex items-baseline justify-between gap-4 text-sm text-muted-foreground">
+        {state.status === "loading" && (
+          <span className="inline-flex items-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            chargement…
+          </span>
+        )}
+        {state.status === "ready" && <span>{tremplins.length} ouvert(s)</span>}
+        <span className="ml-auto" />
+      </div>
 
       {state.status === "error" && (
         <Card className="border-destructive/40 bg-destructive/5">
@@ -61,14 +56,14 @@ export function TremplinsView() {
           <CardContent className="py-16 text-center text-muted-foreground">
             Aucun tremplin détecté pour l'instant.
             <br />
-            Lance le crawler : <code>cd crawler && python -m tremplins.pipeline</code>
+            Lance le crawler : <code>cd crawler && python -m tremplins.pipeline --include-venues</code>
           </CardContent>
         </Card>
       )}
 
       {state.status === "ready" && tremplins.length > 0 && (
         <>
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             <FilterChip active={dept === "all"} onClick={() => setDept("all")}>
               Tous ({tremplins.length})
             </FilterChip>
@@ -120,7 +115,9 @@ export function TremplinsView() {
                       </Badge>
                     )}
                     {t.location && <Badge variant="outline">{t.location}</Badge>}
-                    <span className="ml-auto text-muted-foreground">source · {t.source_id}</span>
+                    <span className="ml-auto text-muted-foreground">
+                      source · {t.source_id ?? "venue"}
+                    </span>
                   </CardContent>
                 </Card>
               </li>

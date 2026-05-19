@@ -29,12 +29,24 @@ Récupère `SUPABASE_DB_URL` dans Supabase Dashboard → Project Settings → Da
 |---|---|
 | `python -m tremplins.db` | sanity check connexion Postgres |
 | `python scripts/seed_sources.py` | sync `config/sources.yaml` → table `sources` |
-| `python scripts/seed_venues.py` | sync `config/sources_discovered.yaml` → table `venues` |
-| `python -m tremplins.pipeline` | cycle complet de crawl |
+| `python scripts/seed_venues.py` | sync `config/sources_discovered.yaml` (Wikipédia) → `venues` |
+| `python scripts/ingest_acna.py` | **ingère les 12 .ods de l'Agence Culturelle NA → `venues`** (~4800 structures) |
+| `python -m tremplins.pipeline` | crawl des sources curées (sources.yaml) |
+| `python -m tremplins.pipeline --include-venues` | **mode exhaustif : crawl aussi les venues crawlables (~4100 URLs)** |
 | `python -m tremplins.pipeline --only le-rim` | crawl d'une seule source |
 | `python -m tremplins.pipeline --skip-llm` | dev — bypass de la vérification LLM |
 | `python -m tremplins.discovery` | propose des sources candidates |
 | `python scripts/parse_wiki_na.py` | régénère `sources_discovered.yaml` depuis le dump Wikipédia |
+
+## Couverture des sources (objectif : ne rien rater)
+
+Trois strates qui se complètent :
+
+1. **Sources curées** (`config/sources.yaml`, ~15 entrées) — Le RIM, SMAC, institutions. Crawlées à chaque run.
+2. **Catalogue Agence Culturelle NA** (table `venues`, ~4800 structures, ~4100 avec URL) — exhaustif. Ingéré une fois par an depuis les exports .ods officiels.
+3. **Découverte continue** (`discovery.py`) — propose des candidats hors catalogue.
+
+Le flag `--include-venues` du pipeline parcourt aussi (2). Compte budget LLM ~€1-2 par run complet sur l'ensemble du catalogue.
 
 ## Édition des sources
 

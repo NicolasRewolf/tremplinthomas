@@ -1,7 +1,8 @@
 export type Tremplin = {
   id: number
   url: string
-  source_id: string
+  source_id: string | null     // null si le tremplin vient d'une venue (catalogue ACNA)
+  venue_id: string | null
   dept: string | null
   title: string
   summary: string | null
