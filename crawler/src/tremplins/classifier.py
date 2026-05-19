@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import unicodedata
 from dataclasses import dataclass
 
@@ -8,6 +9,33 @@ from anthropic import Anthropic
 from .config import ANTHROPIC_API_KEY, ANTHROPIC_MODEL, load_keywords
 
 log = logging.getLogger(__name__)
+
+
+_FENCE_RE = re.compile(r"```(?:json)?\s*(.+?)\s*```", re.DOTALL | re.IGNORECASE)
+
+
+def _parse_json_lenient(raw: str) -> dict | None:
+    """Parse une réponse LLM même si elle est enveloppée dans des fences
+    markdown ou précédée de texte. Strict d'abord, puis tolérant."""
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        pass
+    # Fence markdown ```json ... ```
+    m = _FENCE_RE.search(raw)
+    if m:
+        try:
+            return json.loads(m.group(1))
+        except json.JSONDecodeError:
+            pass
+    # Premier objet JSON apparent
+    m = re.search(r"\{[^{}]*\}", raw, re.DOTALL)
+    if m:
+        try:
+            return json.loads(m.group(0))
+        except json.JSONDecodeError:
+            return None
+    return None
 
 
 def _norm(s: str) -> str:
@@ -42,7 +70,7 @@ class Verdict:
 SYSTEM = """Tu es un classifieur pour une veille de tremplins musicaux en Nouvelle-Aquitaine (France).
 Un "tremplin musical" est un appel à candidatures pour des artistes/groupes (concours, sélection, scène ouverte sélective) qui débouche sur des concerts, un accompagnement ou un prix.
 
-Réponds UNIQUEMENT par un JSON valide, sans markdown, avec ces champs :
+Réponds UNIQUEMENT par un objet JSON brut, sans aucun texte avant ou après, sans fences markdown (PAS de ```), avec ces champs :
 {
   "is_tremplin": bool,
   "confidence": float entre 0 et 1,
@@ -70,16 +98,15 @@ def llm_verify(url: str, title: str, text: str) -> Verdict:
         max_tokens=400,
         system=SYSTEM,
         messages=[
-            {
-                "role": "user",
-                "content": f"URL: {url}\nTitre: {title}\n\n---\n{snippet}",
-            }
+            {"role": "user", "content": f"URL: {url}\nTitre: {title}\n\n---\n{snippet}"},
+            # Pré-remplit la réponse — force le modèle à commencer par "{"
+            # et donc à produire du JSON brut sans fences markdown.
+            {"role": "assistant", "content": "{"},
         ],
     )
-    raw = msg.content[0].text.strip()
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError:
+    raw = "{" + msg.content[0].text.strip()
+    data = _parse_json_lenient(raw)
+    if data is None:
         log.warning("LLM returned non-JSON for %s: %r", url, raw[:200])
         return Verdict(is_tremplin=False, confidence=0.0)
 

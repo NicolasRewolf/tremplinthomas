@@ -1,9 +1,10 @@
 import argparse
 import logging
+from datetime import datetime, timezone
 
 from .classifier import keyword_prefilter, llm_verify
 from .config import load_sources
-from .db import connect
+from .db import select, upsert
 from .extractor import extract
 from .fetcher import fetch_source
 
@@ -12,44 +13,40 @@ log = logging.getLogger(__name__)
 
 def _yaml_sources_as_targets() -> list[dict]:
     """Charge config/sources.yaml en format unifié 'crawl target'."""
-    targets = []
-    for s in load_sources():
-        targets.append({
+    return [
+        {
             "kind": "source",
-            "key": s["id"],          # text key, pour source_id côté tremplin
+            "key": s["id"],
             "venue_id": None,
             "name": s["name"],
             "url": s["url"],
             "paths": s.get("paths"),
             "dept": s.get("dept"),
-        })
-    return targets
+        }
+        for s in load_sources()
+    ]
 
 
 def _venue_targets() -> list[dict]:
-    """Charge les venues crawlable=true depuis Postgres."""
-    targets = []
-    with connect() as conn, conn.cursor() as cur:
-        cur.execute(
-            """
-            select id, name, url, dept, category, city
-              from public.venues
-             where crawlable = true and url is not null
-            """
-        )
-        for v in cur.fetchall():
-            targets.append({
-                "kind": "venue",
-                "key": None,
-                "venue_id": str(v["id"]),
-                "name": v["name"],
-                "url": v["url"],
-                "paths": None,
-                "dept": v["dept"],
-                "_category": v["category"],
-                "_city": v["city"],
-            })
-    return targets
+    """Charge les venues crawlable=true depuis Supabase."""
+    rows = select(
+        "venues",
+        select="id,name,url,dept,category,city",
+        crawlable="eq.true",
+        url="not.is.null",
+    )
+    return [
+        {
+            "kind": "venue",
+            "key": None,
+            "venue_id": v["id"],
+            "name": v["name"],
+            "url": v["url"],
+            "paths": None,
+            "dept": v["dept"],
+        }
+        for v in rows
+    ]
 
 
 def _build_targets(include_venues: bool, only: str | None) -> list[dict]:
@@ -111,30 +108,12 @@ def run(only: str | None = None, skip_llm: bool = False, include_venues: bool = 
 
 
 def _upsert_tremplin(**row):
-    """Upsert via ON CONFLICT — préserve first_seen, met à jour last_seen."""
-    with connect() as conn, conn.cursor() as cur:
-        cur.execute(
-            """
-            insert into public.tremplins
-              (url, source_id, venue_id, dept, title, summary, deadline,
-               location, confidence, content_hash, first_seen, last_seen)
-            values
-              (%(url)s, %(source_id)s, %(venue_id)s, %(dept)s, %(title)s,
-               %(summary)s, %(deadline)s, %(location)s, %(confidence)s,
-               %(content_hash)s, now(), now())
-            on conflict (url) do update set
-              title        = excluded.title,
-              summary      = excluded.summary,
-              deadline     = excluded.deadline,
-              location     = excluded.location,
-              confidence   = excluded.confidence,
-              content_hash = excluded.content_hash,
-              source_id    = coalesce(excluded.source_id, public.tremplins.source_id),
-              venue_id     = coalesce(excluded.venue_id, public.tremplins.venue_id),
-              last_seen    = now()
-            """,
-            row,
-        )
+    """UPSERT via PostgREST. On omet first_seen (DEFAULT now() à l'insert,
+    intouché à l'update) et les colonnes None pour préserver l'existant.
+    """
+    row["last_seen"] = datetime.now(timezone.utc).isoformat()
+    body = {k: v for k, v in row.items() if v is not None}
+    upsert("tremplins", [body], on_conflict="url")
 
 
 def main():
