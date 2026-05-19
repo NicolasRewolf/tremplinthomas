@@ -3,6 +3,7 @@ import { DEPT_LABELS } from "@/types/tremplin"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { BarChartCard } from "@/components/charts/BarChartCard"
+import { VenuesList } from "@/components/VenuesList"
 import { Loader2 } from "lucide-react"
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -66,34 +67,41 @@ export function CatalogueView() {
         <StatCard label="Catégories" value={state.categories.length} />
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Par catégorie</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <BarChartCard
-            data={catData}
-            xKey="name"
-            bars={[{ key: "total", label: "Structures" }]}
-            height={320}
-            layout="vertical"
-          />
-        </CardContent>
-      </Card>
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">Toutes les structures</h2>
+        <VenuesList />
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Par département</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <BarChartCard
-            data={deptData}
-            xKey="name"
-            bars={[{ key: "total", label: "Structures" }]}
-            height={300}
-          />
-        </CardContent>
-      </Card>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Par catégorie</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <BarChartCard
+              data={catData}
+              xKey="name"
+              bars={[{ key: "total", label: "Structures" }]}
+              height={320}
+              layout="vertical"
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Par département</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <BarChartCard
+              data={deptData}
+              xKey="name"
+              bars={[{ key: "total", label: "Structures" }]}
+              height={320}
+            />
+          </CardContent>
+        </Card>
+      </div>
 
       <Card>
         <CardHeader>
